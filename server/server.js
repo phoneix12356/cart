@@ -12,7 +12,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://cart-ten-phi.vercel.app/",
+    origin: "https://cart-ten-phi.vercel.app",
     credentials: true,
   })
 );
