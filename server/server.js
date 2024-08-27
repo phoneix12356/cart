@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -32,7 +33,7 @@ app.use((req, res, next) => {
 });
 
 mongoose
-  .connect("mongodb://localhost:27017/ecommerce")
+  .connect(process.env.DB_URL)
   .then(() => logger.info("Connected to MongoDB"))
   .catch((err) => logger.error("Could not connect to MongoDB", err));
 
@@ -40,7 +41,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
 
-const PORT = 5000;
+PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   logger.info(`Server running on port ${PORT}`);
 });
