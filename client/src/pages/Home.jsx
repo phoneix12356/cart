@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../api/api";
 import { toast } from "react-toastify";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 import {
   AddItemToUserCart,
@@ -12,14 +13,16 @@ import {
 function Home() {
   const [products, setProducts] = useState([]);
   const [quantity, setQuantity] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
   const user = localStorage.getItem("user");
 
   const handleDataFetching = async () => {
+    setLoading(true);
     try {
       const response = await api.get("/api/products");
-
+      setLoading(false);
       setProducts(response.data);
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -30,6 +33,8 @@ function Home() {
     handleDataFetching();
     if (user) dispatch(fetchUserCart());
   }, [user]);
+
+  if (loading) return <div className="w-full min-h-screen flex items-center justify-center "> <AiOutlineLoading3Quarters className="animate-spin w-20 h-20 text-gray-400" /> </div>;
 
   const handleAddToCart = (product, quantity) => {
     toast.success("Item added successfully");
