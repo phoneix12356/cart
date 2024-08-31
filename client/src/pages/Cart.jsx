@@ -6,6 +6,7 @@ import {
   DeleteItemofUserCart,
 } from "../features/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 function Cart() {
   const savedCart = useSelector((state) => state.cart.list);
@@ -19,6 +20,7 @@ function Cart() {
   }, [dispatch]);
 
   const handleRemove = (productId) => {
+    toast.error("item remove successfully");
     if (user) {
       dispatch(DeleteItemofUserCart({ id: productId }));
       dispatch(removeFromCart(productId));
